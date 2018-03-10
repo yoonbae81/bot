@@ -8,7 +8,7 @@
     [yquant.bot.handlers.default]
     [yquant.bot.handlers.list]
     [yquant.bot.handlers.monitor]
-    [yquant.bot.utils.session :refer [get_session]]
+    [yquant.bot.utils.session :refer [get-session]]
     [ring.adapter.jetty     :refer [run-jetty]]))
 
 (defn webhook
@@ -17,7 +17,7 @@
   (let [text    (get-in request [:body :message :text])
         chat-id (get-in request [:body :message :chat :id])
         message (handler text chat-id)]
-    (info (get_session chat-id))
+    (info (get-session chat-id))
     {:status  200
      :headers {"content-type" "application/json"}
      :body    (merge {:method     "sendMessage"
