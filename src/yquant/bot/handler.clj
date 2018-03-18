@@ -1,21 +1,27 @@
 (ns yquant.bot.handler
   (:require
-    [yquant.bot.utils.session :refer [get-session]]))
+    [yquant.bot.utils.session :as s]))
+
+(def top-level-pages {:list    {}
+                      :holding {}
+                      :monitor {}})
 
 (defn dispatch
   "if text starts with / then converts keyword, otherwise retrieve :mode from session map"
-  [text chat-id]
-  (if (= (get text 0) \/)
-    (keyword (subs text 1))
-    (:mode (get-session chat-id))))
+  [message]
+  (let [session (s/get-by message)
+        handler (-> message
+                    :text
+                    (subs 1)
+                    keyword)]
+    (if (or (contains? top-level-pages handler)
+            (contains? (:available-pages session) handler))
+      (s/set-next-handler message handler)
+      (:handler session))))
 
 (defmulti handler dispatch)
 
 (comment
-  (def request {:body {:message {:chat {:id 268911454} :text "/help"}}})
-  (def chat-id (get-in request [:body :message :chat :id]))
-  (def text (get-in request [:body :message :text]))
-
-  (def chat-id 268911454)
-  (dispatch "/help" chat-id)
+  (def message {:text "/list" :from {:username "yoonbae81"} :chat {:id 268911454}})
+  (dispatch {:text "/list" :from {:username "yoonbae81"} :chat {:id 268911454}})
   )

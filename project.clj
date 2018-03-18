@@ -15,7 +15,6 @@
                  [ring/ring-ssl             "0.3.0"]
                  [environ                   "1.1.0"]
                  [morse                     "0.2.4"]
-                 [com.layerware/hugsql      "0.4.8"]
                  [org.clojure/java.jdbc     "0.7.5"]
                  [org.xerial/sqlite-jdbc "3.21.0.1"]]
   :main ^:skip-aot yquant.bot.core

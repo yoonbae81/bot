@@ -1,4 +1,4 @@
-(ns yquant.bot.utils.search
+(ns yquant.bot.utils.stock
   (:require [clojure.data.json :as json]
             [clojure.edn       :as edn]
             [clojure.java.io   :as io]))
